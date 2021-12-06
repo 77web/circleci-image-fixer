@@ -13,12 +13,16 @@ class CircleCiImageFixer
     ) {
     }
 
-    public function execute(string $organization, string $fromImage, string $toImage)
+    public function execute(string $organization, string $fromImage, string $toImage): int
     {
+        $fixed = 0;
         foreach ($this->fetcher->fetch($organization) as $repo) {
-            if ($this->checker->check($repo['name'], $fromImage)) {
+            if ($this->checker->check($organization, $repo['name'], $fromImage)) {
                 $this->fixer->fix($organization, $repo['name'], $fromImage, $toImage);
+                $fixed++;
             }
         }
+
+        return $fixed;
     }
 }
