@@ -14,6 +14,6 @@ class RepositoryFetcher
 
     public function fetch(string $organization): array
     {
-        return [];
+        return $this->githubClient->repositories()->org($organization);
     }
 }
