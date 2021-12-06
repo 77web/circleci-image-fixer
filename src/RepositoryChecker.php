@@ -18,12 +18,12 @@ class RepositoryChecker
     public function check(string $organization, string $repositoryName, string $fromImage): bool
     {
         $contentsApi = $this->githubClient->repo()->contents();
-        if (!$contentsApi->exists($organization, $repositoryName, '.cricleci/config.yml', 'master')) {
+        if (!$contentsApi->exists($organization, $repositoryName, '.circleci/config.yml', 'master')) {
             return false;
         }
 
-
         $contentInfo = $contentsApi->show($organization, $repositoryName, '.circleci/config.yml', 'master');
-        return str_contains($contentInfo['content'], 'image: '.$fromImage);
+
+        return str_contains(base64_decode($contentInfo['content']), 'image: '.$fromImage);
     }
 }
