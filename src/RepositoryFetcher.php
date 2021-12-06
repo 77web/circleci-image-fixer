@@ -14,6 +14,16 @@ class RepositoryFetcher
 
     public function fetch(string $organization): array
     {
-        return $this->githubClient->repositories()->org($organization);
+        $allRepos = [];
+        $page = 1;
+        do {
+            $res = $this->githubClient->repositories()->org($organization, ['page' => $page, 'per_page' => 100]);
+            foreach ($res as $repo) {
+                $allRepos[] = $repo;
+            }
+            $page++;
+        } while(count($res) > 0);
+
+        return $allRepos;
     }
 }
