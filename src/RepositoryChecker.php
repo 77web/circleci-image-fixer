@@ -24,7 +24,7 @@ class RepositoryChecker
 
         $refApi = $this->githubClient->gitData()->references();
         try {
-            $refApi->show($organization, $repositoryName, 'fix-circleci');
+            $refApi->show($organization, $repositoryName, 'heads/fix-circleci');
             return false;
         } catch (\Exception $e) {
             if (!str_contains('Not Found', $e->getMessage())) {

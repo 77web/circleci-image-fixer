@@ -19,7 +19,9 @@ class RepositoryFetcher
         do {
             $res = $this->githubClient->repositories()->org($organization, ['page' => $page, 'per_page' => 100]);
             foreach ($res as $repo) {
-                $allRepos[] = $repo;
+                if ($repo['archived'] === false) {
+                    $allRepos[] = $repo;
+                }
             }
             $page++;
         } while(count($res) > 0);
