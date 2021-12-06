@@ -21,7 +21,7 @@ class RepositoryFixer
             $contentInfo['content']
         );
 
-        $updated = str_replace($fromImage, $toImage, $circleYaml);
+        $updated = str_replace('image: '.$fromImage, 'image: '.$toImage, $circleYaml);
         foreach ($this->additionalReplacements as $before => $after) {
             $updated = str_replace($before, $after, $updated);
         }

@@ -21,7 +21,9 @@ class CircleCiImageFixer
                 $this->fixer->fix($organization, $repo['name'], $fromImage, $toImage);
                 $fixed++;
             }
+            echo '.';
         }
+        echo PHP_EOL;
 
         return $fixed;
     }
