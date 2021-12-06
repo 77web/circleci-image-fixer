@@ -22,6 +22,15 @@ class RepositoryChecker
             return false;
         }
 
+        $refApi = $this->githubClient->gitData()->references();
+        try {
+            $refApi->show($organization, $repositoryName, 'fix-circleci');
+        } catch (\Exception $e) {
+            if (!str_contains('Not Found', $e->getMessage())) {
+                return false;
+            }
+        }
+
         $contentInfo = $contentsApi->show($organization, $repositoryName, '.circleci/config.yml', 'master');
 
         return str_contains(base64_decode($contentInfo['content']), 'image: '.$fromImage);
